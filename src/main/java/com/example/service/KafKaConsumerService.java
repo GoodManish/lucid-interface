@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,17 @@ public class KafKaConsumerService {
     } catch (Exception e) {
       e.printStackTrace();
       log.error("error occurred while sending message : {}", e.getMessage());
+    }
+  }
+
+  @KafkaListener(topics = "transact-update-table", groupId = "user-transact-grp-1", containerFactory = "userKafkaListenerContainerFactory")
+  public void consume(User user) {
+    log.info("user received from transact -> {}", user);
+    try {
+      this.kafKaProducerService.sendMessage(user);
+    } catch (Exception e) {
+      e.printStackTrace();
+      log.error("error occurred while sending user : {}", e.getMessage());
     }
   }
 
