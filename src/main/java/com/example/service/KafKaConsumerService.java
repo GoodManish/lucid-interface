@@ -14,7 +14,7 @@ public class KafKaConsumerService {
     this.kafKaProducerService = kafKaProducerService;
   }
 
-  @KafkaListener(topics = "transact-update-table", groupId = "transact-grp-id-1")
+  @KafkaListener(topics = "transact-update-table", groupId = "transact-grp-1")
   public void consume(String message) {
     log.info("Message received from transact -> {}", message);
     try {
